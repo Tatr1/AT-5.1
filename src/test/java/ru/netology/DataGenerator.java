@@ -14,23 +14,23 @@ public class DataGenerator {
 
     static private Faker faker = new Faker(new Locale("ru"));
 
-     public static String generateDate(int days) {
+    public static String generateDate(int days) {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
     public static String generateCity() {
-      City randomCity = new City();
+        City randomCity = new City();
         String city = randomCity.randomChoiceCity();
         return city;
     }
 
     public static String generateName() {
-         String name = faker.name().fullName();
+        String name = faker.name().fullName();
         return name;
     }
 
     public static String generatePhone() {
-       String phone = faker.phoneNumber().phoneNumber();
+        String phone = faker.phoneNumber().phoneNumber();
         return phone;
     }
 
@@ -39,16 +39,16 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser() {
-          UserInfo user = new UserInfo();
+            UserInfo user = new UserInfo(generateCity(), generateName(), generatePhone());
             return user;
         }
     }
 
     @Value
     public static class UserInfo {
-        String city = generateCity();
-        String name = generateName();
-        String phone = generatePhone();
+        String city;
+        String name;
+        String phone;
 
         public String getCity() {
             return city;
@@ -62,7 +62,11 @@ public class DataGenerator {
             return phone;
         }
 
-
+        public UserInfo(String city, String name, String phone) {
+            this.city = city;
+            this.name = name;
+            this.phone = phone;
+        }
     }
 
 }
